@@ -1,48 +1,40 @@
 ﻿using AutoMapper;
-using Cashflow.Models;
-using Cashflowr.Data.Dtos;
+using GranaFacil.Models;
+using GranaFacil.Data.Dtos.Entrada;
+using GranaFacil.Data.Dtos.Gasto;
+using GranaFacil.Data.Dtos.Reserva;
 
-
-namespace Cashflowr.Profiles
+namespace GranaFacil.Profiles
 {
     public class EntradaProfile : Profile
     {
         public EntradaProfile()
         {
+            // =========================
             // ENTRADA
-            CreateMap<Entradas, ReadEntradaDto>()
-                .ForMember(dest => dest.Nome,
-                           opt => opt.MapFrom(src => src.Nome.ToString()));
+            // =========================
+            CreateMap<Entrada, ReadEntradaDto>();
 
-            CreateMap<CreateEntradaDto, Entradas>();
-            CreateMap<UpdateEntradaDto, Entradas>();
+            CreateMap<CreateEntradaDto, Entrada>();
+            CreateMap<UpdateEntradaDto, Entrada>();
 
 
+            // =========================
             // RESERVA
-            CreateMap<Reserva, ReadReservaDto>()
-                .ForMember(dest => dest.Tipo,
-                           opt => opt.MapFrom(src => src.Tipo.ToString()));
+            // =========================
+            CreateMap<Reserva, ReadReservaDto>();
 
             CreateMap<CreateReservaDto, Reserva>();
             CreateMap<UpdateReservaDto, Reserva>();
 
-            //SAIDA CATEGORIA
-            CreateMap<Saida, ReadSaidaDto>()
-                .ForMember(dest => dest.Categoria,
-                           opt => opt.MapFrom(src => src.Categoria.ToString()));
 
-            CreateMap<CreateSaidaDto, Saida>();
-            CreateMap<UpdateSaidaDto, Saida>();
+            // =========================
+            // GASTO
+            // =========================
+            CreateMap<Gasto, ReadGastoDto>();
 
-            //SAIDA FORMA DE PAGAMENTO
-            CreateMap<Saida, ReadSaidaDto>()
-                .ForMember(dest => dest.FormaDePagamento,
-                          opt => opt.MapFrom(src => src.FormaDePagamento.ToString()));
-
-
-
-
+            CreateMap<CreateGastoDto, Gasto>();
+            CreateMap<UpdateGastoDto, Gasto>();
         }
     }
-
 }

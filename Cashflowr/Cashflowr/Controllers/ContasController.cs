@@ -1,9 +1,6 @@
-﻿
+﻿using Microsoft.AspNetCore.Mvc;
 
-
-using Microsoft.AspNetCore.Mvc;
-
-namespace Cashflowr.Controllers
+namespace GranaFacil.Controllers
 {
     public class ContasController : ControllerBase
     {

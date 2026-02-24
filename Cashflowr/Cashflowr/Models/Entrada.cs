@@ -1,13 +1,12 @@
-﻿using Cashflowr.Enums;
-using System;
+﻿using GranaFacil.Enums.Entrada;
 using System.ComponentModel.DataAnnotations;
-namespace Cashflow.Models;
-public class Entradas
+namespace GranaFacil.Models;
+public class Entrada
 {
     [Key]
     public int Id { get; set; }
     public int IdUsuario { get; set; }
-    public NomeEntrada Nome { get; set; }
-	public double Valor { get; set; }
+    public Nomes Nome { get; set; }
+	public decimal Valor { get; set; }
     public DateTime DataEntrada { get; set; }
 }

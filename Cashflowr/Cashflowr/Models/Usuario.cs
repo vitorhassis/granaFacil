@@ -1,14 +1,12 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-namespace Cashflow.Models;
+﻿using System.ComponentModel.DataAnnotations;
+namespace GranaFacil.Models;
 public class Usuario
 {
 	[Key]
 	public int Id {  get; set; }
-	public String Nome { get; set; }
-    public String Email { get; set; }
-	public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
-	public bool IsAtivo { get; set; }
-
-	public string Senha { get; set; }
+	public String Nome { get; set; } = null!;
+    public String Email { get; set; } = null!;
+    public string Senha { get; set; } = null!;
+    public DateTime DataCriacao { get; set; }
+    public bool IsAtivo { get; set; }
 }
