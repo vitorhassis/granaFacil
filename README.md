@@ -76,9 +76,11 @@ O projeto segue uma estrutura organizada em camadas:
 
 - Certifique-se de ter o .NET SDK instalado
 - Clone o repositório:
+```bash
 git clone https://github.com/vitorhassis/Cashflowr-web.git
 cd Cashflowr
 dotnet run
+```
 - Configure a string de conexão com o banco no appsettings.json
 
 - Execute as migrations:
@@ -86,9 +88,9 @@ dotnet ef database update
 
 ---
 
-📩 Contato
+## 📩 Contato
 
-📧 Email: vitorassis997@gmail.com
-👨‍💻 GitHub: github.com/vitorhassis
+- 📧 Email: sasilva.vh@gmail.com
+- 👨‍💻 GitHub: github.com/vitorhassis
 
 <p align="center">⚡ <em>Desenvolvido por Vitor Assis</em> ⚡</p>
