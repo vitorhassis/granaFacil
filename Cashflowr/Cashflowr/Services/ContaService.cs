@@ -1,15 +1,16 @@
-﻿using GranaFacil.Models;
-using GranaFacil.Data;
+﻿using GranaFacil.Data;
 using GranaFacil.Data.Dtos.Conta;
+using GranaFacil.Models;
+using GranaFacil.Repositories;
 
 namespace GranaFacil.Services
 {
     public class ContaService
     {
-        private readonly GranaFacilContext _context;
-        public ContaService(GranaFacilContext context)
+        private readonly IContaRepository _repository;
+        public ContaService(IContaRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public void Criar(CreateContasDto contaDto, int idUsuario)
@@ -24,9 +25,9 @@ namespace GranaFacil.Services
                 throw new ArgumentException("Valor deve ser maior que zero.");
             }
 
-            var valorPlanejado = contaDto.ValorPlanejado ?? contaDto.Valor; //se o valor da esquerda for null, usa o valor da direita para definir o valorPlanejado (evita um if e else)
+            var valorPlanejado = contaDto.ValorPlanejado ?? contaDto.Valor; 
 
-            if (valorPlanejado < 0) //sempre validando a var final que vai ser usada
+            if (valorPlanejado < 0) 
             {
                 throw new ArgumentException("Valor planejado não pode ser negativo.");
             }
@@ -41,8 +42,8 @@ namespace GranaFacil.Services
                 DataPagamento = null, 
             };
 
-            _context.Contas.Add(conta);
-            _context.SaveChanges();
+            _repository.Adicionar(conta);
+            _repository.Salvar();
         }
 
         public List<ReadContasDto> ListarPorUsuarioEMes(int idUsuario, int mes, int ano) 
@@ -54,25 +55,24 @@ namespace GranaFacil.Services
             if (ano < 2000 || ano > DateTime.Today.Year + 5)
                 throw new ArgumentException("Ano inválido.");
 
+            var contas = _repository.ListarPorUsuarioEMes(idUsuario, mes, ano);
 
-            return _context.Contas
-                .Where(c => c.IdUsuario == idUsuario && c.DataVencimento.Month == mes && c.DataVencimento.Year == ano)
-                .Select(c => new ReadContasDto
-                {
-                    Id = c.Id,
-                    Nome = c.Nome,
-                    Valor = c.Valor,
-                    ValorPlanejado = c.ValorPlanejado,
-                    DataVencimento = c.DataVencimento,
-                    DataPagamento = c.DataPagamento,
-                    IsPago = c.IsPago,
+            return contas.Select(c => new ReadContasDto
+            {
+                Id = c.Id,
+                Nome = c.Nome,
+                Valor = c.Valor,
+                ValorPlanejado = c.ValorPlanejado,
+                DataVencimento = c.DataVencimento,
+                DataPagamento = c.DataPagamento,
+                IsPago = c.IsPago
+            }).ToList();
 
-                }).ToList();
         }
 
         public void Alterar(int idConta, int idUsuario, UpdateContasDto contaDto)
         {
-            var conta = _context.Contas.FirstOrDefault(c => c.Id == idConta && c.IdUsuario == idUsuario);
+            var conta = _repository.BuscarPorId(idConta, idUsuario);
 
             if (conta == null)
             {
@@ -100,26 +100,28 @@ namespace GranaFacil.Services
             conta.Valor = contaDto.Valor;
             conta.ValorPlanejado = valorPlanejado;
             conta.DataVencimento = contaDto.DataVencimento;
-            
-            _context.SaveChanges();
+
+            _repository.Salvar();
         }
 
-        public void Deletar(int idConta, int idUsuario)
+        public void Remover(int idConta, int idUsuario)
         {
-            var conta = _context.Contas.FirstOrDefault(c => c.Id == idConta && c.IdUsuario == idUsuario);
+            var conta = _repository.BuscarPorId(idConta, idUsuario);
 
-            if(conta == null)
+            if (conta == null)
             {
                 throw new ArgumentException("Conta não encontrada.");
             }
 
-            _context.Contas.Remove(conta);
-            _context.SaveChanges();
+            _repository.Remover(conta);
+            _repository.Salvar();
+
+
         }
 
         public void Pagar(int idConta, int idUsuario)
         {
-            var conta = _context.Contas.FirstOrDefault(c => c.Id == idConta && c.IdUsuario == idUsuario);
+            var conta = _repository.BuscarPorId(idConta, idUsuario);
 
             if (conta == null)
             {
@@ -134,7 +136,7 @@ namespace GranaFacil.Services
             conta.DataPagamento = DateTime.Now;
             conta.IsPago = true;
 
-            _context.SaveChanges();
+            _repository.Salvar();
         }
 
     }
