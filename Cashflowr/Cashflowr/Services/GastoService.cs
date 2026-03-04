@@ -5,16 +5,17 @@ using GranaFacil.Models;
 using GranaFacil.Data;
 using GranaFacil.Data.Dtos.Gasto;
 using GranaFacil.Enums.Gastos;
+using GranaFacil.Repositories;
 
 namespace GranaFacil.Services
 {
     public class GastoService
     {
-        private readonly GranaFacilContext _context;
+        private readonly IGastoRepository _repository;
 
-        public GastoService (GranaFacilContext context)
+        public GastoService (IGastoRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public void Criar(CreateGastoDto gastoDto, int idUsuario)
@@ -50,11 +51,11 @@ namespace GranaFacil.Services
                 IsEssencial = gastoDto.IsEssencial
             };
 
-            _context.Gastos.Add(gasto);
-            _context.SaveChanges();
+            _repository.Criar(gasto);
+            _repository.Salvar();
         }
 
-        public List<ReadGastoDto> ListarGastoPorUsuario(int idUsuario, int mes, int ano)
+        public List<ReadGastoDto> ListarGastoPorUsuarioEMes(int idUsuario, int mes, int ano)
         {
 
             if (mes < 1 || mes > 12)
@@ -63,9 +64,9 @@ namespace GranaFacil.Services
             if (ano < 2000 || ano > DateTime.Today.Year + 5)
                 throw new ArgumentException("Ano inválido.");
 
-            return _context.Gastos
-                .Where(g => g.IdUsuario == idUsuario && g.DataReferencia.Month == mes && g.DataReferencia.Year == ano)
-                .Select(r => new ReadGastoDto
+            var gasto = _repository.ListarPorUsuarioEMes(idUsuario, mes, ano);
+
+            return gasto.Select(r => new ReadGastoDto
                 {
                     Id = r.Id,
                     Categoria = r.Categoria,
@@ -78,7 +79,7 @@ namespace GranaFacil.Services
 
         public void Alterar(UpdateGastoDto gastoDto, int idUsuario, int idGasto)
         {
-            var gasto = _context.Gastos.FirstOrDefault(r => r.Id == idGasto && r.IdUsuario == idUsuario);
+            var gasto = _repository.BuscarPorId(idGasto, idUsuario);
 
             if (gasto == null)
             {
@@ -112,20 +113,20 @@ namespace GranaFacil.Services
             gasto.DataReferencia = gastoDto.DataReferencia;
             gasto.IsEssencial = gastoDto.IsEssencial;
 
-            _context.SaveChanges();
+            _repository.Salvar();
         }
 
         public void Deletar(int idUsuario,int idGasto)
         {
-            var gasto = _context.Gastos.FirstOrDefault(g => g.Id == idGasto && g.IdUsuario == idUsuario);
+            var gasto = _repository.BuscarPorId(idGasto, idUsuario);
 
             if (gasto == null)
             {
                 throw new ArgumentException("Gasto não encontrado.");
             }
 
-            _context.Gastos.Remove(gasto);
-            _context.SaveChanges();
+            _repository.Remover(gasto);
+            _repository.Salvar();
         }
     }
 }

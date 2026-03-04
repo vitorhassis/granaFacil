@@ -2,16 +2,17 @@
 using GranaFacil.Data.Dtos.Entrada;
 using GranaFacil.Data;
 using GranaFacil.Data.Dtos.Meta;
+using GranaFacil.Repositories;
 
 namespace GranaFacil.Services
 {
     public class MetaService
     {
-        private readonly GranaFacilContext _context;
+        private readonly IMetaRepository _repository;
 
-        public MetaService(GranaFacilContext context)
+        public MetaService(IMetaRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public void Criar(CreateMetaDto metaDto, int idUsuario)
@@ -47,8 +48,8 @@ namespace GranaFacil.Services
 
             };
 
-            _context.Metas.Add(meta);
-            _context.SaveChanges();
+            _repository.Criar(meta);
+            _repository.Salvar();
         }
 
         public List<ReadMetaDto> ListarMetaPorUsuario(int idUsuario, int mes, int ano)
@@ -60,9 +61,9 @@ namespace GranaFacil.Services
             if (ano < 2000 || ano > DateTime.Today.Year + 5)
                 throw new ArgumentException("Ano inválido.");
 
+            var meta = _repository.ListarPorUsuarioEMes(idUsuario, mes, ano);
 
-            return _context.Metas
-                .Where(m => m.IdUsuario == idUsuario && m.DataCriacao.Month == mes && m.DataCriacao.Year == ano)
+            return meta
                 .Select(m => new ReadMetaDto
                 {
                     Id = m.Id,
@@ -77,7 +78,7 @@ namespace GranaFacil.Services
 
         public void Alterar (int idMeta, int idUsuario, UpdateMetaDto metaDto)
         {
-            var meta = _context.Metas.FirstOrDefault(m => m.Id == idMeta && m.IdUsuario == idUsuario);
+            var meta = _repository.BuscarPorId(idMeta, idUsuario);
 
             if (meta == null)
             {
@@ -109,20 +110,20 @@ namespace GranaFacil.Services
             meta.ValorAlvo = metaDto.ValorAlvo;
             meta.DataPrazo = metaDto.DataPrazo;
 
-            _context.SaveChanges();
+            _repository.Salvar();
         }
 
         public void Deletar(int idMeta, int idUsuario)
         {
-            var meta = _context.Metas.FirstOrDefault(c => c.Id == idMeta && c.IdUsuario == idUsuario);
+            var meta = _repository.BuscarPorId(idMeta, idUsuario);
 
             if (meta == null)
             {
                 throw new ArgumentException("Meta não encontrada.");
             }
 
-            _context.Metas.Remove(meta);
-            _context.SaveChanges();
+            _repository.Remover(meta);
+            _repository.Salvar();
         }
     }
 }

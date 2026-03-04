@@ -14,5 +14,6 @@ namespace GranaFacil.Data.Dtos.Usuario
         [Required(ErrorMessage = "Senha do usuário é obrigatória.")]
         [MinLength(6, ErrorMessage = "Senha deve ter pelo menos 6 caracteres.")]
         public string Senha { get; set; } = null!;
+
     }
 }

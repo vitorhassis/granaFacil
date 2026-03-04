@@ -55,9 +55,9 @@ namespace GranaFacil.Services
             if (ano < 2000 || ano > DateTime.Today.Year + 5)
                 throw new ArgumentException("Ano inválido.");
 
-            var contas = _repository.ListarPorUsuarioEMes(idUsuario, mes, ano);
+            var conta = _repository.ListarPorUsuarioEMes(idUsuario, mes, ano);
 
-            return contas.Select(c => new ReadContasDto
+            return conta.Select(c => new ReadContasDto
             {
                 Id = c.Id,
                 Nome = c.Nome,

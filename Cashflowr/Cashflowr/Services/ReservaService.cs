@@ -1,18 +1,17 @@
 ﻿using GranaFacil.Models;
-using GranaFacil.Data.Dtos.Meta;
-using GranaFacil.Data;
 using GranaFacil.Data.Dtos.Reserva;
 using GranaFacil.Enums.Reserva;
+using GranaFacil.Repositories;
 
 namespace GranaFacil.Services
 {
     public class ReservaService
     {
-        private readonly GranaFacilContext _context;
+        private readonly IReservaRepository _repository;
 
-        public ReservaService(GranaFacilContext context)
+        public ReservaService(IReservaRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public void Criar (CreateReservaDto reservaDto, int idUsuario)
@@ -40,8 +39,8 @@ namespace GranaFacil.Services
                 
             };
 
-            _context.Reservas.Add(reserva);
-            _context.SaveChanges();
+            _repository.Criar(reserva);
+            _repository.Salvar();
         }
 
         public List<ReadReservaDto> ListarReservaPorUsuario(int idUsuario, int mes, int ano)
@@ -53,8 +52,9 @@ namespace GranaFacil.Services
             if (ano < 2000 || ano > DateTime.Today.Year + 5)
                 throw new ArgumentException("Ano inválido.");
 
-            return _context.Reservas
-                .Where(r => r.IdUsuario == idUsuario && r.DataCriacao.Month == mes && r.DataCriacao.Year == ano)
+            var reserva = _repository.ListarPorUsuarioEMes(idUsuario, mes, ano);
+
+            return reserva
                 .Select(r => new ReadReservaDto
                 {
                     Id = r.Id,
@@ -67,7 +67,7 @@ namespace GranaFacil.Services
 
         public void Alterar (UpdateReservaDto reservaDto, int idUsuario, int idReserva)
         {
-            var reserva = _context.Reservas.FirstOrDefault(r => r.Id == idReserva && r.IdUsuario == idUsuario);
+            var reserva = _repository.BuscarPorId(idReserva, idUsuario);
 
             if (reserva == null)
             {
@@ -94,21 +94,21 @@ namespace GranaFacil.Services
             reserva.Nome = reservaDto.Nome;
             reserva.Valor = reservaDto.Valor;
             reserva.DataCriacao = DateTime.Today;
-            
-            _context.SaveChanges();
+
+            _repository.Salvar();
         }
 
         public void Deletar(int idUsuario, int idReserva)
         {
-            var reserva = _context.Reservas.FirstOrDefault(r => r.Id == idReserva && r.IdUsuario == idUsuario);
+            var reserva = _repository.BuscarPorId(idReserva, idUsuario);
 
             if (reserva == null)
             {
                 throw new ArgumentException("Reserva não encontrada.");
             }
 
-            _context.Reservas.Remove(reserva);
-            _context.SaveChanges();
+            _repository.Remover(reserva);
+            _repository.Salvar();
         }
 
     }
