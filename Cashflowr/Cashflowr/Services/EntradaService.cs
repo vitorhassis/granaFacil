@@ -1,16 +1,17 @@
 ﻿using GranaFacil.Data;
 using GranaFacil.Data.Dtos.Entrada;
 using GranaFacil.Models;
+using GranaFacil.Repositories;
 
 namespace GranaFacil.Services
 {
     public class EntradaService
     {
-        private readonly GranaFacilContext _context;
+        private readonly IEntradaRepository _repository;
 
-        public EntradaService(GranaFacilContext context)
+        public EntradaService(IEntradaRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public void Criar(CreateEntradaDto entradaDto, int idUsuario)
@@ -34,8 +35,7 @@ namespace GranaFacil.Services
   
             };
 
-            _context.Entradas.Add(entrada);
-            _context.SaveChanges();
+            _repository.Criar(entrada);
         }
 
         public List<ReadEntradaDto> ListarPorUsuarioEMes (int idUsuario, int mes, int ano)
@@ -47,10 +47,9 @@ namespace GranaFacil.Services
             if (ano < 2000 || ano > DateTime.Today.Year + 5)
                 throw new ArgumentException("Ano inválido.");
 
+            var entrada = _repository.ListarPorUsuarioEMes(idUsuario, mes, ano);
 
-            return _context.Entradas
-                .Where(e => e.IdUsuario == idUsuario && e.DataEntrada.Month == mes && e.DataEntrada.Year == ano)
-                .Select(e => new ReadEntradaDto
+            return entrada.Select(e => new ReadEntradaDto
                 {
                     Id = e.Id,
                     Nome = e.Nome,
@@ -61,7 +60,7 @@ namespace GranaFacil.Services
 
         public void Alterar(int idEntrada, int idUsuario, UpdateEntradaDto entradaDto)
         {
-            var entrada = _context.Entradas.FirstOrDefault(e => e.Id == idEntrada && e.IdUsuario == idUsuario);
+            var entrada = _repository.BuscarPorId(idEntrada, idUsuario);
 
             if (entrada == null)
             {
@@ -83,20 +82,20 @@ namespace GranaFacil.Services
             entrada.Valor = entradaDto.Valor;
             entrada.DataEntrada = entradaDto.DataEntrada;
 
-            _context.SaveChanges();
+            _repository.Salvar();
         }
 
         public void Deletar(int idEntrada, int idUsuario)
         {
-            var entrada = _context.Entradas.FirstOrDefault(c => c.Id == idEntrada && c.IdUsuario == idUsuario);
+            var entrada = _repository.BuscarPorId(idEntrada, idUsuario);
 
             if (entrada == null)
             {
                 throw new ArgumentException("Entrada não encontrada.");
             }
 
-            _context.Entradas.Remove(entrada);
-            _context.SaveChanges();
+            _repository.Remover(entrada);
+            _repository.Salvar();
         }
 
     }
