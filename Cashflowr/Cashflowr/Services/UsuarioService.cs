@@ -15,7 +15,7 @@ namespace GranaFacil.Services
             _repository = repository;
         }
 
-        public void Criar (RegisterUsuarioDto userDto)
+        public Usuario Criar (RegisterUsuarioDto userDto)
         {
             var userExistente = _repository.BuscarPorEmail(userDto.Email);
 
@@ -34,6 +34,7 @@ namespace GranaFacil.Services
 
             _repository.Criar(user);
             _repository.Salvar();
+            return user;
         }
         public ReadUsuarioDto BuscarPorEmail(string email)
         {

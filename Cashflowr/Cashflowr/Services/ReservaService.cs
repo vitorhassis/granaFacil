@@ -14,7 +14,7 @@ namespace GranaFacil.Services
             _repository = repository;
         }
 
-        public void Criar (CreateReservaDto reservaDto, int idUsuario)
+        public Reserva Criar (CreateReservaDto reservaDto, int idUsuario)
         {
             if(string.IsNullOrWhiteSpace(reservaDto.Nome)) {
                 throw new ArgumentException("Nome da reserva não pode ser vazio.");
@@ -41,6 +41,7 @@ namespace GranaFacil.Services
 
             _repository.Criar(reserva);
             _repository.Salvar();
+            return reserva;
         }
 
         public List<ReadReservaDto> ListarReservaPorUsuario(int idUsuario, int mes, int ano)
@@ -109,6 +110,12 @@ namespace GranaFacil.Services
 
             _repository.Remover(reserva);
             _repository.Salvar();
+        }
+
+        public Reserva BuscarPorId(int idReserva, int idUsuario)
+        {
+            var reserva = _repository.BuscarPorId(idReserva, idUsuario);
+            return reserva;
         }
 
     }

@@ -6,6 +6,7 @@ namespace GranaFacil.Models
     {
         public int Id { get; set; }
         public int IdUsuario { get; set; }
+        public Usuario? Usuario { get; set; }
         public Categorias Categoria { get; set; } 
         public FormaDePagamento FormaDePagamento { get; set; }
         public decimal Valor { get; set; }

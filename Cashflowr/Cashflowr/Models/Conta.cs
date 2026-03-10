@@ -3,7 +3,8 @@
 public class Conta
 {
 	public int Id { get; set; }
-	public int IdUsuario { get; set; }
+	public int IdUsuario { get; set; } //FK
+	public Usuario? Usuario { get; set; }
 	public string Nome { get; set; } = null!;
 	public decimal Valor { get; set; }
     public decimal? ValorPlanejado { get; set; }

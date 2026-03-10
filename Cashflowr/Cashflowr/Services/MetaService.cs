@@ -15,7 +15,7 @@ namespace GranaFacil.Services
             _repository = repository;
         }
 
-        public void Criar(CreateMetaDto metaDto, int idUsuario)
+        public Meta Criar(CreateMetaDto metaDto, int idUsuario)
         {
             if (metaDto.DataPrazo < DateTime.Today.Date)
             {
@@ -50,6 +50,8 @@ namespace GranaFacil.Services
 
             _repository.Criar(meta);
             _repository.Salvar();
+            return meta;
+
         }
 
         public List<ReadMetaDto> ListarMetaPorUsuario(int idUsuario, int mes, int ano)
@@ -124,6 +126,12 @@ namespace GranaFacil.Services
 
             _repository.Remover(meta);
             _repository.Salvar();
+        }
+
+        public Meta BuscarPorId(int idMeta, int idUsuario)
+        {
+            var meta = _repository.BuscarPorId(idMeta, idUsuario);
+            return meta;
         }
     }
 }

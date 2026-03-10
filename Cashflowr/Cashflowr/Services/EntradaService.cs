@@ -14,7 +14,7 @@ namespace GranaFacil.Services
             _repository = repository;
         }
 
-        public void Criar(CreateEntradaDto entradaDto, int idUsuario)
+        public Entrada Criar(CreateEntradaDto entradaDto, int idUsuario)
         {
             if (entradaDto.DataEntrada < DateTime.Today.AddYears(-1) || entradaDto.DataEntrada> DateTime.Today)
             {
@@ -36,6 +36,8 @@ namespace GranaFacil.Services
             };
 
             _repository.Criar(entrada);
+            _repository.Salvar();
+            return entrada;
         }
 
         public List<ReadEntradaDto> ListarPorUsuarioEMes (int idUsuario, int mes, int ano)
@@ -58,7 +60,7 @@ namespace GranaFacil.Services
                 }).ToList();
         }
 
-        public void Alterar(int idEntrada, int idUsuario, UpdateEntradaDto entradaDto)
+        public void Alterar (int idEntrada, int idUsuario, UpdateEntradaDto entradaDto)
         {
             var entrada = _repository.BuscarPorId(idEntrada, idUsuario);
 
@@ -85,7 +87,7 @@ namespace GranaFacil.Services
             _repository.Salvar();
         }
 
-        public void Deletar(int idEntrada, int idUsuario)
+        public void Deletar (int idEntrada, int idUsuario)
         {
             var entrada = _repository.BuscarPorId(idEntrada, idUsuario);
 
@@ -96,6 +98,12 @@ namespace GranaFacil.Services
 
             _repository.Remover(entrada);
             _repository.Salvar();
+        }
+
+        public Entrada BuscarPorId(int idEntrada, int idUsuario)
+        {
+            var entrada = _repository.BuscarPorId(idEntrada, idUsuario);
+            return entrada;
         }
 
     }

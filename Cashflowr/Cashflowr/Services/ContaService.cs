@@ -13,7 +13,7 @@ namespace GranaFacil.Services
             _repository = repository;
         }
 
-        public void Criar(CreateContasDto contaDto, int idUsuario)
+        public Conta Criar(CreateContasDto contaDto, int idUsuario)
         {
             if (contaDto.DataVencimento < DateTime.Today.AddYears(-1) || contaDto.DataVencimento > DateTime.Today.AddYears(5))
             {
@@ -44,6 +44,7 @@ namespace GranaFacil.Services
 
             _repository.Adicionar(conta);
             _repository.Salvar();
+            return conta;
         }
 
         public List<ReadContasDto> ListarPorUsuarioEMes(int idUsuario, int mes, int ano) 
@@ -115,8 +116,6 @@ namespace GranaFacil.Services
 
             _repository.Remover(conta);
             _repository.Salvar();
-
-
         }
 
         public void Pagar(int idConta, int idUsuario)
@@ -137,6 +136,12 @@ namespace GranaFacil.Services
             conta.IsPago = true;
 
             _repository.Salvar();
+        }
+
+        public Conta BuscarPorId(int idConta, int idUsuario)
+        {
+            var conta = _repository.BuscarPorId(idConta, idUsuario);
+            return conta;
         }
 
     }

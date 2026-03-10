@@ -18,7 +18,7 @@ namespace GranaFacil.Services
             _repository = repository;
         }
 
-        public void Criar(CreateGastoDto gastoDto, int idUsuario)
+        public Gasto Criar(CreateGastoDto gastoDto, int idUsuario)
         {
             if (gastoDto.Categoria == Categorias.ValorNaoDefinido)
             {
@@ -53,6 +53,7 @@ namespace GranaFacil.Services
 
             _repository.Criar(gasto);
             _repository.Salvar();
+            return gasto;
         }
 
         public List<ReadGastoDto> ListarGastoPorUsuarioEMes(int idUsuario, int mes, int ano)
@@ -127,6 +128,12 @@ namespace GranaFacil.Services
 
             _repository.Remover(gasto);
             _repository.Salvar();
+        }
+
+        public Gasto BuscarPorId(int idGasto, int idUsuario)
+        {
+            var gasto = _repository.BuscarPorId(idGasto, idUsuario);
+            return gasto;
         }
     }
 }
