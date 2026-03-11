@@ -18,9 +18,9 @@ namespace GranaFacil.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar(int idUsuario, [FromBody] CreateReservaDto reservaDto)
+        public IActionResult Criar(int UsuarioId, [FromBody] CreateReservaDto reservaDto)
         {
-            var reserva = _service.Criar(reservaDto, idUsuario);
+            var reserva = _service.Criar(reservaDto, UsuarioId);
 
             return CreatedAtAction(
                 nameof(BuscarPorId),
@@ -30,16 +30,16 @@ namespace GranaFacil.Controllers
         }
 
         [HttpGet]
-        public IActionResult Listar(int idUsuario, int mes, int ano)
+        public IActionResult Listar(int UsuarioId, int mes, int ano)
         {
-            var reservas = _service.ListarReservaPorUsuario(idUsuario, mes, ano);
+            var reservas = _service.ListarReservaPorUsuario(UsuarioId, mes, ano);
             return Ok(reservas);
         }
 
         [HttpGet("{idReserva}")]
-        public IActionResult BuscarPorId(int idReserva, int idUsuario)
+        public IActionResult BuscarPorId(int idReserva, int UsuarioId)
         {
-            var reserva = _service.BuscarPorId(idReserva, idUsuario);
+            var reserva = _service.BuscarPorId(idReserva, UsuarioId);
 
             if (reserva == null)
             {
@@ -49,16 +49,16 @@ namespace GranaFacil.Controllers
         }
 
         [HttpPut("{idReserva}")]
-        public IActionResult Alterar(int idReserva, int idUsuario, [FromBody] UpdateReservaDto reservaDto)
+        public IActionResult Alterar(int idReserva, int UsuarioId, [FromBody] UpdateReservaDto reservaDto)
         {
-            _service.Alterar(reservaDto, idUsuario, idReserva);
+            _service.Alterar(reservaDto, UsuarioId, idReserva);
             return NoContent(); //204 = alteração feita com sucesso.
         }
 
         [HttpDelete("{idReserva}")]
-        public IActionResult Remover(int idReserva, int idUsuario)
+        public IActionResult Remover(int idReserva, int UsuarioId)
         {
-            _service.Deletar(idReserva, idUsuario);
+            _service.Deletar(idReserva, UsuarioId);
             return NoContent();
         }
     }

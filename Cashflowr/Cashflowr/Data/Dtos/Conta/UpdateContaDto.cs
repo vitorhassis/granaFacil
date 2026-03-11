@@ -2,7 +2,7 @@
 
 namespace GranaFacil.Data.Dtos.Conta
 {
-    public class UpdateContasDto
+    public class UpdateContaDto
     {
         [Required(ErrorMessage = "Nome da conta é obrigatório.")]
         public string Nome { get; set; } = null!;

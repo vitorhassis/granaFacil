@@ -6,9 +6,9 @@ namespace GranaFacil.Repositories
     {
         void Adicionar(Conta conta);
 
-        Conta? BuscarPorId(int idConta, int idUsuario);
+        Conta? BuscarPorId(int idConta, int UsuarioId);
 
-        List<Conta> ListarPorUsuarioEMes(int idUsuario, int mes, int ano);
+        List<Conta> ListarPorUsuarioEMes(int UsuarioId, int mes, int ano);
 
         void Remover(Conta conta);
 

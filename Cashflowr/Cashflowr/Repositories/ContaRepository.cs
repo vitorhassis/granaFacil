@@ -17,16 +17,16 @@ namespace GranaFacil.Repositories
             _context.Contas.Add(conta);
         }
         
-        public Conta? BuscarPorId(int idConta, int idUsuario)
+        public Conta? BuscarPorId(int idConta, int UsuarioId)
         {
             return _context.Contas
-            .FirstOrDefault(c => c.Id == idConta && c.IdUsuario == idUsuario);
+            .FirstOrDefault(c => c.Id == idConta && c.UsuarioId == UsuarioId);
         }
 
-        public List<Conta> ListarPorUsuarioEMes(int idUsuario, int mes, int ano)
+        public List<Conta> ListarPorUsuarioEMes(int UsuarioId, int mes, int ano)
         {
             return _context.Contas
-            .Where(c => c.IdUsuario == idUsuario &&
+            .Where(c => c.UsuarioId == UsuarioId &&
                         c.DataVencimento.Month == mes &&
                         c.DataVencimento.Year == ano)
             .ToList();

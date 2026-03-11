@@ -1,6 +1,6 @@
 ﻿namespace GranaFacil.Data.Dtos.Conta
 {
-    public class ReadContasDto
+    public class ReadContaDto
     {
         public int Id { get; set; }
         public string? Nome { get; set; }

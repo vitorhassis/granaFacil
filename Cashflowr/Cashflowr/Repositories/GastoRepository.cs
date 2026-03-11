@@ -11,9 +11,9 @@ namespace GranaFacil.Repositories
         {
             _context = context;
         }
-        public Gasto? BuscarPorId(int idGasto, int idUsuario)
+        public Gasto? BuscarPorId(int idGasto, int UsuarioId)
         {
-            return _context.Gastos.FirstOrDefault(c => c.Id == idGasto && c.IdUsuario == idUsuario);
+            return _context.Gastos.FirstOrDefault(c => c.Id == idGasto && c.UsuarioId == UsuarioId);
         }
 
         public void Criar(Gasto gasto)

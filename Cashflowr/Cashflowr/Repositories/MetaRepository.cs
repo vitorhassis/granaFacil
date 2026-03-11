@@ -10,10 +10,10 @@ namespace GranaFacil.Repositories
         {
             _context = context;
         }
-        public Meta? BuscarPorId(int idMeta, int idUsuario)
+        public Meta? BuscarPorId(int idMeta, int UsuarioId)
         {
             return _context.Metas
-           .FirstOrDefault(m => m.Id == idMeta && m.IdUsuario == idUsuario);
+           .FirstOrDefault(m => m.Id == idMeta && m.UsuarioId == UsuarioId);
         }
 
         public void Criar(Meta meta)
@@ -21,10 +21,10 @@ namespace GranaFacil.Repositories
             _context.Add(meta);
         }
 
-        public List<Meta> ListarPorUsuarioEMes(int idUsuario, int mes, int ano)
+        public List<Meta> ListarPorUsuarioEMes(int UsuarioId, int mes, int ano)
         {
             return _context.Metas
-            .Where(m => m.IdUsuario == idUsuario &&
+            .Where(m => m.UsuarioId == UsuarioId &&
                         m.DataCriacao.Month == mes &&
                         m.DataCriacao.Year == ano)
             .ToList();

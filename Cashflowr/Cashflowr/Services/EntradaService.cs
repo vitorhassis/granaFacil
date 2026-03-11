@@ -14,9 +14,9 @@ namespace GranaFacil.Services
             _repository = repository;
         }
 
-        public Entrada Criar(CreateEntradaDto entradaDto, int idUsuario)
+        public Entrada Criar(CreateEntradaDto entradaDto, int UsuarioId)
         {
-            if (entradaDto.DataEntrada < DateTime.Today.AddYears(-1) || entradaDto.DataEntrada> DateTime.Today)
+            if (entradaDto.DataEntrada < DateTime.Today.AddYears(-1) || entradaDto.DataEntrada > DateTime.Today.AddYears(5))
             {
                 throw new ArgumentException("Data de entrada inválida.");
             }
@@ -26,10 +26,15 @@ namespace GranaFacil.Services
                 throw new ArgumentException("Valor deve ser maior que zero.");
             }
 
+            if (entradaDto.Categoria == Enums.Entrada.CategoriasEntradas.ValorNaoDefinido)
+            {
+                throw new ArgumentException("Categoria de entrada é obrigatória.");
+            }
+
             var entrada = new Entrada
             {
-                IdUsuario = idUsuario,
-                Nome = entradaDto.Nome,
+                UsuarioId = UsuarioId,
+                Categoria = entradaDto.Categoria,
                 Valor = entradaDto.Valor,
                 DataEntrada = entradaDto.DataEntrada,
   
@@ -40,29 +45,29 @@ namespace GranaFacil.Services
             return entrada;
         }
 
-        public List<ReadEntradaDto> ListarPorUsuarioEMes (int idUsuario, int mes, int ano)
+        public List<ReadEntradaDto> ListarPorUsuarioEMes (int UsuarioId, int mes, int ano)
         {
 
-            if (mes < 1 || mes > 12)
+            if (mes < 01 || mes > 12)
                 throw new ArgumentException("Mês inválido.");
 
             if (ano < 2000 || ano > DateTime.Today.Year + 5)
                 throw new ArgumentException("Ano inválido.");
 
-            var entrada = _repository.ListarPorUsuarioEMes(idUsuario, mes, ano);
+            var entrada = _repository.ListarPorUsuarioEMes(UsuarioId, mes, ano);
 
             return entrada.Select(e => new ReadEntradaDto
                 {
                     Id = e.Id,
-                    Nome = e.Nome,
+                    Categoria = e.Categoria,
                     Valor = e.Valor,
                     DataEntrada = e.DataEntrada,
                 }).ToList();
         }
 
-        public void Alterar (int idEntrada, int idUsuario, UpdateEntradaDto entradaDto)
+        public void Alterar (int idEntrada, int UsuarioId, UpdateEntradaDto entradaDto)
         {
-            var entrada = _repository.BuscarPorId(idEntrada, idUsuario);
+            var entrada = _repository.BuscarPorId(idEntrada, UsuarioId);
 
             if (entrada == null)
             {
@@ -79,17 +84,22 @@ namespace GranaFacil.Services
                 throw new ArgumentException("Valor deve ser maior que zero.");
             }
 
+            if (entradaDto.Categoria == Enums.Entrada.CategoriasEntradas.ValorNaoDefinido)
+            {
+                throw new ArgumentException("Categoria de entrada é obrigatória.");
+            }
 
-            entrada.Nome = entradaDto.Nome;
+
+            entrada.Categoria = entradaDto.Categoria;
             entrada.Valor = entradaDto.Valor;
             entrada.DataEntrada = entradaDto.DataEntrada;
 
             _repository.Salvar();
         }
 
-        public void Deletar (int idEntrada, int idUsuario)
+        public void Deletar (int idEntrada, int UsuarioId)
         {
-            var entrada = _repository.BuscarPorId(idEntrada, idUsuario);
+            var entrada = _repository.BuscarPorId(idEntrada, UsuarioId);
 
             if (entrada == null)
             {
@@ -100,9 +110,9 @@ namespace GranaFacil.Services
             _repository.Salvar();
         }
 
-        public Entrada BuscarPorId(int idEntrada, int idUsuario)
+        public Entrada? BuscarPorId(int idEntrada, int UsuarioId)
         {
-            var entrada = _repository.BuscarPorId(idEntrada, idUsuario);
+            var entrada = _repository.BuscarPorId(idEntrada, UsuarioId);
             return entrada;
         }
 

@@ -12,10 +12,10 @@ namespace GranaFacil.Repositories
             _context = context;
         }
 
-        public Entrada? BuscarPorId(int idEntrada, int idUsuario)
+        public Entrada? BuscarPorId(int idEntrada, int UsuarioId)
         {
             return _context.Entradas
-            .FirstOrDefault(e => e.Id == idEntrada && e.IdUsuario == idUsuario);
+            .FirstOrDefault(e => e.Id == idEntrada && e.UsuarioId == UsuarioId);
         }
 
         public void Criar(Entrada entrada)
@@ -23,10 +23,10 @@ namespace GranaFacil.Repositories
             _context.Entradas.Add(entrada);
         }
 
-        public List<Entrada> ListarPorUsuarioEMes(int idUsuario, int mes, int ano)
+        public List<Entrada> ListarPorUsuarioEMes(int UsuarioId, int mes, int ano)
         {
             return _context.Entradas
-            .Where(e => e.IdUsuario == idUsuario &&
+            .Where(e => e.UsuarioId == UsuarioId &&
                         e.DataEntrada.Month == mes &&
                         e.DataEntrada.Year == ano)
             .ToList();

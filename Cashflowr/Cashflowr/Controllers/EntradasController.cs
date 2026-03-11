@@ -17,9 +17,9 @@ namespace GranaFacil.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar (int idUsuario, [FromBody] CreateEntradaDto dto)
+        public IActionResult Criar (int UsuarioId, [FromBody] CreateEntradaDto dto)
         {
-            var entrada = _service.Criar(dto, idUsuario);
+            var entrada = _service.Criar(dto, UsuarioId);
             return CreatedAtAction(
                 nameof(BuscarPorId),
                 new { idEntrada = entrada.Id },
@@ -28,16 +28,16 @@ namespace GranaFacil.Controllers
         }
 
         [HttpGet]
-        public IActionResult Listar (int idUsuario, int mes, int ano)
+        public IActionResult Listar (int UsuarioId, int mes, int ano)
         {
-            var entradas = _service.ListarPorUsuarioEMes(idUsuario, mes, ano);
+            var entradas = _service.ListarPorUsuarioEMes(UsuarioId, mes, ano);
             return Ok(entradas);
         }
 
         [HttpGet("{idEntrada}")]
-        public IActionResult BuscarPorId (int idEntrada, int idUsuario)
+        public IActionResult BuscarPorId (int idEntrada, int UsuarioId)
         {
-            var entrada = _service.BuscarPorId(idEntrada, idUsuario);
+            var entrada = _service.BuscarPorId(idEntrada, UsuarioId);
 
             if(entrada == null)
             {
@@ -47,16 +47,16 @@ namespace GranaFacil.Controllers
         }
 
         [HttpPut("{idEntrada}")]
-        public IActionResult Alterar (int idEntrada, int idUsuario, [FromBody] UpdateEntradaDto entradaDto)
+        public IActionResult Alterar (int idEntrada, int UsuarioId, [FromBody] UpdateEntradaDto entradaDto)
         {
-            _service.Alterar(idEntrada, idUsuario, entradaDto);
+            _service.Alterar(idEntrada, UsuarioId, entradaDto);
             return NoContent();
         }
 
         [HttpDelete("{idEntrada}")]
-        public IActionResult Remover(int idEntrada, int idUsuario)
+        public IActionResult Remover(int idEntrada, int UsuarioId)
         {
-            _service.Deletar(idEntrada, idUsuario);
+            _service.Deletar(idEntrada, UsuarioId);
             return NoContent();
         }
 

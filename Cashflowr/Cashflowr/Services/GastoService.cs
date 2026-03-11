@@ -1,8 +1,4 @@
 ﻿using GranaFacil.Models;
-using GranaFacil.Data.Dtos;
-using GranaFacil.Enums.Reserva;
-using GranaFacil.Models;
-using GranaFacil.Data;
 using GranaFacil.Data.Dtos.Gasto;
 using GranaFacil.Enums.Gastos;
 using GranaFacil.Repositories;
@@ -18,11 +14,11 @@ namespace GranaFacil.Services
             _repository = repository;
         }
 
-        public Gasto Criar(CreateGastoDto gastoDto, int idUsuario)
+        public Gasto Criar(CreateGastoDto gastoDto, int UsuarioId)
         {
-            if (gastoDto.Categoria == Categorias.ValorNaoDefinido)
+            if (gastoDto.DataReferencia < DateTime.Today.AddYears(-1) || gastoDto.DataReferencia > DateTime.Today.AddYears(5))
             {
-                throw new ArgumentException("Categoria de Saida não pode ser vazio.");
+                throw new ArgumentException("Categoria de gasto não pode ser vazio.");
             }
 
             if (gastoDto.Valor <= 0)
@@ -35,14 +31,10 @@ namespace GranaFacil.Services
                 throw new ArgumentException("Tipo de pagamento inválido.");
             }
 
-            if (gastoDto.DataReferencia > DateTime.Today)
-            {
-                throw new ArgumentException("Data do gasto inválida");
-            }
 
             var gasto = new Gasto
             {
-                IdUsuario = idUsuario,
+                UsuarioId = UsuarioId,
                 Categoria = gastoDto.Categoria,
                 FormaDePagamento = gastoDto.FormaDePagamento,
                 Valor = gastoDto.Valor,
@@ -56,16 +48,16 @@ namespace GranaFacil.Services
             return gasto;
         }
 
-        public List<ReadGastoDto> ListarGastoPorUsuarioEMes(int idUsuario, int mes, int ano)
+        public List<ReadGastoDto> ListarGastoPorUsuarioEMes(int UsuarioId, int mes, int ano)
         {
 
-            if (mes < 1 || mes > 12)
+            if (mes < 01 || mes > 12)
                 throw new ArgumentException("Mês inválido.");
 
             if (ano < 2000 || ano > DateTime.Today.Year + 5)
                 throw new ArgumentException("Ano inválido.");
 
-            var gasto = _repository.ListarPorUsuarioEMes(idUsuario, mes, ano);
+            var gasto = _repository.ListarPorUsuarioEMes(UsuarioId, mes, ano);
 
             return gasto.Select(r => new ReadGastoDto
                 {
@@ -78,9 +70,9 @@ namespace GranaFacil.Services
                 }).ToList();
         }
 
-        public void Alterar(UpdateGastoDto gastoDto, int idUsuario, int idGasto)
+        public void Alterar(UpdateGastoDto gastoDto, int UsuarioId, int idGasto)
         {
-            var gasto = _repository.BuscarPorId(idGasto, idUsuario);
+            var gasto = _repository.BuscarPorId(idGasto, UsuarioId);
 
             if (gasto == null)
             {
@@ -117,9 +109,9 @@ namespace GranaFacil.Services
             _repository.Salvar();
         }
 
-        public void Deletar(int idUsuario,int idGasto)
+        public void Deletar(int UsuarioId, int idGasto)
         {
-            var gasto = _repository.BuscarPorId(idGasto, idUsuario);
+            var gasto = _repository.BuscarPorId(idGasto, UsuarioId);
 
             if (gasto == null)
             {
@@ -130,9 +122,9 @@ namespace GranaFacil.Services
             _repository.Salvar();
         }
 
-        public Gasto BuscarPorId(int idGasto, int idUsuario)
+        public Gasto? BuscarPorId(int idGasto, int UsuarioId)
         {
-            var gasto = _repository.BuscarPorId(idGasto, idUsuario);
+            var gasto = _repository.BuscarPorId(idGasto, UsuarioId);
             return gasto;
         }
     }

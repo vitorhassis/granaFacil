@@ -16,9 +16,9 @@ namespace GranaFacil.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar(int idUsuario, [FromBody] CreateGastoDto gastoDto)
+        public IActionResult Criar(int UsuarioId, [FromBody] CreateGastoDto gastoDto)
         {
-            var gasto = _service.Criar(gastoDto, idUsuario);
+            var gasto = _service.Criar(gastoDto, UsuarioId);
 
             return CreatedAtAction(
                 nameof(BuscarPorId),
@@ -28,16 +28,16 @@ namespace GranaFacil.Controllers
         }
 
         [HttpGet]
-        public IActionResult Listar(int idUsuario, int mes, int ano)
+        public IActionResult Listar(int UsuarioId, int mes, int ano)
         {
-            var gastos = _service.ListarGastoPorUsuarioEMes(idUsuario, mes, ano);
+            var gastos = _service.ListarGastoPorUsuarioEMes(UsuarioId, mes, ano);
             return Ok(gastos); //200 = Ok.
         }
 
         [HttpGet("{idGasto}")]
-        public IActionResult BuscarPorId(int idGasto, int idUsuario)
+        public IActionResult BuscarPorId(int idGasto, int UsuarioId)
         {
-            var gasto = _service.BuscarPorId(idGasto, idUsuario);
+            var gasto = _service.BuscarPorId(idGasto, UsuarioId);
 
             if (gasto == null)
             {
@@ -47,16 +47,16 @@ namespace GranaFacil.Controllers
         }
 
         [HttpPut("{idGasto}")] 
-        public IActionResult Alterar(int idGasto, int idUsuario, [FromBody] UpdateGastoDto gastoDto)
+        public IActionResult Alterar(int idGasto, int UsuarioId, [FromBody] UpdateGastoDto gastoDto)
         {
-            _service.Alterar(gastoDto, idUsuario, idGasto);
+            _service.Alterar(gastoDto, UsuarioId, idGasto);
             return NoContent(); //204 = alteração feita com sucesso.
         }
 
         [HttpDelete("{idGasto}")]
-        public IActionResult Remover(int idGasto, int idUsuario)
+        public IActionResult Remover(int idGasto, int UsuarioId)
         {
-            _service.Deletar(idGasto, idUsuario);
+            _service.Deletar(idGasto, UsuarioId);
             return NoContent();
         }
     }

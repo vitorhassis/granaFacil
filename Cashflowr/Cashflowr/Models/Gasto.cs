@@ -5,7 +5,7 @@ namespace GranaFacil.Models
     public class Gasto
     {
         public int Id { get; set; }
-        public int IdUsuario { get; set; }
+        public int UsuarioId { get; set; }
         public Usuario? Usuario { get; set; }
         public Categorias Categoria { get; set; } 
         public FormaDePagamento FormaDePagamento { get; set; }

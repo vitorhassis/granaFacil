@@ -14,13 +14,13 @@ namespace GranaFacil.Services
             _repository = repository;
         }
 
-        public Reserva Criar (CreateReservaDto reservaDto, int idUsuario)
+        public Reserva Criar (CreateReservaDto reservaDto, int UsuarioId)
         {
-            if(string.IsNullOrWhiteSpace(reservaDto.Nome)) {
+            if (string.IsNullOrWhiteSpace(reservaDto.Nome)) {
                 throw new ArgumentException("Nome da reserva não pode ser vazio.");
             }
 
-            if(reservaDto.Tipo == Tipos.ValorNaoDefinido)
+            if (reservaDto.Tipo == Tipos.ValorNaoDefinido)
             {
                 throw new ArgumentException("Insira um tipo de reserva válido.");
             }
@@ -30,9 +30,14 @@ namespace GranaFacil.Services
                 throw new ArgumentException("Valor deve ser maior que zero.");
             }
 
+            if (reservaDto.Tipo == Tipos.Meta && reservaDto.MetaId == null)
+            {
+                throw new ArgumentException("Para registrar esse tipo de reserva, a meta deve ter sido criada.");
+            }
+
             var reserva = new Reserva
             {
-                IdUsuario = idUsuario,
+                UsuarioId = UsuarioId,
                 Nome = reservaDto.Nome,
                 Valor = reservaDto.Valor,
                 DataCriacao = DateTime.Today,
@@ -44,16 +49,16 @@ namespace GranaFacil.Services
             return reserva;
         }
 
-        public List<ReadReservaDto> ListarReservaPorUsuario(int idUsuario, int mes, int ano)
+        public List<ReadReservaDto> ListarReservaPorUsuario(int UsuarioId, int mes, int ano)
         {
 
-            if (mes < 1 || mes > 12)
+            if (mes < 01 || mes > 12)
                 throw new ArgumentException("Mês inválido.");
 
             if (ano < 2000 || ano > DateTime.Today.Year + 5)
                 throw new ArgumentException("Ano inválido.");
 
-            var reserva = _repository.ListarPorUsuarioEMes(idUsuario, mes, ano);
+            var reserva = _repository.ListarPorUsuarioEMes(UsuarioId, mes, ano);
 
             return reserva
                 .Select(r => new ReadReservaDto
@@ -66,9 +71,9 @@ namespace GranaFacil.Services
                 }).ToList();
         }
 
-        public void Alterar (UpdateReservaDto reservaDto, int idUsuario, int idReserva)
+        public void Alterar (UpdateReservaDto reservaDto, int UsuarioId, int idReserva)
         {
-            var reserva = _repository.BuscarPorId(idReserva, idUsuario);
+            var reserva = _repository.BuscarPorId(idReserva, UsuarioId);
 
             if (reserva == null)
             {
@@ -91,7 +96,7 @@ namespace GranaFacil.Services
                 throw new ArgumentException("Valor deve ser maior que zero.");
             }
 
-            reserva.IdUsuario = idUsuario;
+            reserva.UsuarioId = UsuarioId;
             reserva.Nome = reservaDto.Nome;
             reserva.Valor = reservaDto.Valor;
             reserva.DataCriacao = DateTime.Today;
@@ -99,9 +104,9 @@ namespace GranaFacil.Services
             _repository.Salvar();
         }
 
-        public void Deletar(int idUsuario, int idReserva)
+        public void Deletar(int UsuarioId, int idReserva)
         {
-            var reserva = _repository.BuscarPorId(idReserva, idUsuario);
+            var reserva = _repository.BuscarPorId(idReserva, UsuarioId);
 
             if (reserva == null)
             {
@@ -112,9 +117,9 @@ namespace GranaFacil.Services
             _repository.Salvar();
         }
 
-        public Reserva BuscarPorId(int idReserva, int idUsuario)
+        public Reserva? BuscarPorId(int idReserva, int UsuarioId)
         {
-            var reserva = _repository.BuscarPorId(idReserva, idUsuario);
+            var reserva = _repository.BuscarPorId(idReserva, UsuarioId);
             return reserva;
         }
 

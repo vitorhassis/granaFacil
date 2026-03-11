@@ -36,9 +36,6 @@ namespace GranaFacil.Migrations
                     b.Property<DateTime>("DataVencimento")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsPago")
                         .HasColumnType("tinyint(1)");
 
@@ -46,7 +43,7 @@ namespace GranaFacil.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Valor")
@@ -70,16 +67,13 @@ namespace GranaFacil.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Categoria")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DataEntrada")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Nome")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Valor")
@@ -112,13 +106,10 @@ namespace GranaFacil.Migrations
                     b.Property<int>("FormaDePagamento")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsEssencial")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Valor")
@@ -145,14 +136,11 @@ namespace GranaFacil.Migrations
                     b.Property<DateTime>("DataPrazo")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("ValorAcumulado")
@@ -179,9 +167,6 @@ namespace GranaFacil.Migrations
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -189,7 +174,7 @@ namespace GranaFacil.Migrations
                     b.Property<int>("Tipo")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Valor")
@@ -237,7 +222,9 @@ namespace GranaFacil.Migrations
                 {
                     b.HasOne("GranaFacil.Models.Usuario", "Usuario")
                         .WithMany("Contas")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });
@@ -246,7 +233,9 @@ namespace GranaFacil.Migrations
                 {
                     b.HasOne("GranaFacil.Models.Usuario", "Usuario")
                         .WithMany("Entradas")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });
@@ -255,7 +244,9 @@ namespace GranaFacil.Migrations
                 {
                     b.HasOne("GranaFacil.Models.Usuario", "Usuario")
                         .WithMany("Gastos")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });
@@ -264,7 +255,9 @@ namespace GranaFacil.Migrations
                 {
                     b.HasOne("GranaFacil.Models.Usuario", "Usuario")
                         .WithMany("Metas")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });
@@ -273,7 +266,9 @@ namespace GranaFacil.Migrations
                 {
                     b.HasOne("GranaFacil.Models.Usuario", "Usuario")
                         .WithMany("Reservas")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });

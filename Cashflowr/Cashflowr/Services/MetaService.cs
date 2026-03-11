@@ -15,7 +15,7 @@ namespace GranaFacil.Services
             _repository = repository;
         }
 
-        public Meta Criar(CreateMetaDto metaDto, int idUsuario)
+        public Meta Criar(CreateMetaDto metaDto, int UsuarioId)
         {
             if (metaDto.DataPrazo < DateTime.Today.Date)
             {
@@ -39,7 +39,7 @@ namespace GranaFacil.Services
 
             var meta = new Meta
             {
-                IdUsuario = idUsuario,
+                UsuarioId = UsuarioId,
                 Nome = metaDto.Nome,
                 ValorAcumulado = metaDto.ValorAcumulado,
                 ValorAlvo = metaDto.ValorAlvo,
@@ -57,7 +57,7 @@ namespace GranaFacil.Services
         public List<ReadMetaDto> ListarMetaPorUsuario(int idUsuario, int mes, int ano)
         {
 
-            if (mes < 1 || mes > 12)
+            if (mes < 01 || mes > 12)
                 throw new ArgumentException("Mês inválido.");
 
             if (ano < 2000 || ano > DateTime.Today.Year + 5)
@@ -78,9 +78,9 @@ namespace GranaFacil.Services
                 }).ToList();
         }
 
-        public void Alterar (int idMeta, int idUsuario, UpdateMetaDto metaDto)
+        public void Alterar (int idMeta, int UsuarioId, UpdateMetaDto metaDto)
         {
-            var meta = _repository.BuscarPorId(idMeta, idUsuario);
+            var meta = _repository.BuscarPorId(idMeta, UsuarioId);
 
             if (meta == null)
             {
@@ -115,9 +115,9 @@ namespace GranaFacil.Services
             _repository.Salvar();
         }
 
-        public void Deletar(int idMeta, int idUsuario)
+        public void Deletar(int idMeta, int UsuarioId)
         {
-            var meta = _repository.BuscarPorId(idMeta, idUsuario);
+            var meta = _repository.BuscarPorId(idMeta, UsuarioId);
 
             if (meta == null)
             {
@@ -128,9 +128,9 @@ namespace GranaFacil.Services
             _repository.Salvar();
         }
 
-        public Meta BuscarPorId(int idMeta, int idUsuario)
+        public Meta? BuscarPorId(int idMeta, int UsuarioId)
         {
-            var meta = _repository.BuscarPorId(idMeta, idUsuario);
+            var meta = _repository.BuscarPorId(idMeta, UsuarioId);
             return meta;
         }
     }

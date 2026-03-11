@@ -3,7 +3,7 @@
 public class Conta
 {
 	public int Id { get; set; }
-	public int IdUsuario { get; set; } //FK
+	public int UsuarioId { get; set; } //FK. Precisa ser nesse formato exatamente
 	public Usuario? Usuario { get; set; }
 	public string Nome { get; set; } = null!;
 	public decimal Valor { get; set; }

@@ -12,10 +12,10 @@ namespace GranaFacil.Repositories
             _context = context;
         }
 
-        public Reserva? BuscarPorId(int idReserva, int idUsuario)
+        public Reserva? BuscarPorId(int idReserva, int UsuarioId)
         {
             return _context.Reservas
-           .FirstOrDefault(r => r.Id == idReserva && r.IdUsuario == idUsuario);
+           .FirstOrDefault(r => r.Id == idReserva && r.UsuarioId == UsuarioId);
         }
 
         public void Criar(Reserva reserva)
@@ -23,10 +23,10 @@ namespace GranaFacil.Repositories
             _context.Add(reserva);
         }
 
-        public List<Reserva> ListarPorUsuarioEMes(int idUsuario, int mes, int ano)
+        public List<Reserva> ListarPorUsuarioEMes(int UsuarioId, int mes, int ano)
         {
             return _context.Reservas
-            .Where(r => r.IdUsuario == idUsuario &&
+            .Where(r => r.UsuarioId == UsuarioId &&
                         r.DataCriacao.Month == mes &&
                         r.DataCriacao.Year == ano)
             .ToList();

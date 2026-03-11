@@ -12,6 +12,6 @@ public class Usuario
     public ICollection<Entrada> Entradas { get; set; } = new List<Entrada>();
     public ICollection<Gasto> Gastos { get; set; } = new List<Gasto>();
     public ICollection<Meta> Metas { get; set; } = new List<Meta>();
-    public ICollection<Reserva> Reservas{ get; set; } = new List<Reserva>();
+    public ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
 
 }

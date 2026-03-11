@@ -16,9 +16,9 @@ namespace GranaFacil.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar (int idUsuario, [FromBody] CreateContasDto contaDto)
+        public IActionResult Criar (int UsuarioId, [FromBody] CreateContaDto contaDto)
         {
-            var conta = _service.Criar(contaDto, idUsuario);
+            var conta = _service.Criar(contaDto, UsuarioId);
 
             return CreatedAtAction(
                 nameof(BuscarPorId),
@@ -28,16 +28,16 @@ namespace GranaFacil.Controllers
         }
 
         [HttpGet]
-        public IActionResult Listar (int idUsuario, int mes, int ano)
+        public IActionResult Listar (int UsuarioId, int mes, int ano)
         {
-            var contas = _service.ListarPorUsuarioEMes(idUsuario, mes, ano);
+            var contas = _service.ListarPorUsuarioEMes(UsuarioId, mes, ano);
             return Ok(contas); //200 = Ok.
         }
 
-        [HttpGet("{idConta}")]
-        public IActionResult BuscarPorId(int idConta, int idUsuario)
+        [HttpGet("{idConta}")] //idConta vem na rota
+        public IActionResult BuscarPorId(int idConta, int UsuarioId)
         {
-            var conta = _service.BuscarPorId(idConta, idUsuario);
+            var conta = _service.BuscarPorId(idConta, UsuarioId);
 
             if(conta==null)
             {
@@ -46,24 +46,24 @@ namespace GranaFacil.Controllers
             return Ok(conta);
         }
 
-        [HttpPut("{idConta}")] //implemento isso quando o endpoint precisa receber um id pela rota. só olhar no método do service. se no parametro, ele recebe idConta, poe aqui
-        public IActionResult Alterar (int idConta, int idUsuario, [FromBody] UpdateContasDto contaDto)
+        [HttpPut("{idConta}")] //id do recurso é passado via rota
+        public IActionResult Alterar (int idConta, int UsuarioId, [FromBody] UpdateContaDto contaDto)
         {
-            _service.Alterar(idConta, idUsuario, contaDto);
+            _service.Alterar(idConta, UsuarioId, contaDto);
             return NoContent(); //204 = alteração feita com sucesso.
         }
 
         [HttpDelete("{idConta}")]
-        public IActionResult Remover (int idConta, int idUsuario)
+        public IActionResult Remover (int idConta, int UsuarioId)
         {
-            _service.Remover(idConta, idUsuario);
+            _service.Remover(idConta, UsuarioId);
             return NoContent();
         }
 
         [HttpPatch("{idConta}")] 
-        public IActionResult Pagar (int idConta, int idUsuario)
+        public IActionResult Pagar (int idConta, int UsuarioId)
         {
-            _service.Pagar(idConta, idUsuario);
+            _service.Pagar(idConta, UsuarioId);
             return NoContent();
         }
     }

@@ -16,9 +16,9 @@ namespace GranaFacil.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar(int idUsuario, [FromBody] CreateMetaDto metaDto)
+        public IActionResult Criar(int UsuarioId, [FromBody] CreateMetaDto metaDto)
         {
-            var meta = _service.Criar(metaDto, idUsuario);
+            var meta = _service.Criar(metaDto, UsuarioId);
 
             return CreatedAtAction(
                 nameof(BuscarPorId),
@@ -28,16 +28,16 @@ namespace GranaFacil.Controllers
         }
 
         [HttpGet]
-        public IActionResult Listar(int idUsuario, int mes, int ano)
+        public IActionResult Listar(int UsuarioId, int mes, int ano)
         {
-            var metas = _service.ListarMetaPorUsuario(idUsuario, mes, ano);
+            var metas = _service.ListarMetaPorUsuario(UsuarioId, mes, ano);
             return Ok(metas); 
         }
 
         [HttpGet("{idMeta}")]
-        public IActionResult BuscarPorId(int idMeta, int idUsuario)
+        public IActionResult BuscarPorId(int idMeta, int UsuarioId)
         {
-            var meta = _service.BuscarPorId(idMeta, idUsuario);
+            var meta = _service.BuscarPorId(idMeta, UsuarioId);
 
             if (meta == null)
             {
@@ -47,16 +47,16 @@ namespace GranaFacil.Controllers
         }
 
         [HttpPut("{idMeta}")]
-        public IActionResult Alterar(int idMeta, int idUsuario, [FromBody] UpdateMetaDto metaDto)
+        public IActionResult Alterar(int idMeta, int UsuarioId, [FromBody] UpdateMetaDto metaDto)
         {
-            _service.Alterar(idMeta, idUsuario, metaDto);
+            _service.Alterar(idMeta, UsuarioId, metaDto);
             return NoContent(); //204 = alteração feita com sucesso.
         }
 
         [HttpDelete("{idMeta}")]
-        public IActionResult Remover(int idMeta, int idUsuario)
+        public IActionResult Remover(int idMeta, int UsuarioId)
         {
-            _service.Deletar(idMeta, idUsuario);
+            _service.Deletar(idMeta, UsuarioId);
             return NoContent();
         }
     }

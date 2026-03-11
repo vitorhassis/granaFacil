@@ -1,7 +1,8 @@
 ﻿namespace GranaFacil.Enums.Entrada
 {
-    public enum Nomes
+    public enum CategoriasEntradas
     {
+        ValorNaoDefinido = 0,
         GanhoPeriodico = 1,
         RendaExtra = 2,
         Salario = 3,

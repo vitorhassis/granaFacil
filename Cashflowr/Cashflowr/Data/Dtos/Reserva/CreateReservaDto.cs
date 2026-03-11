@@ -5,6 +5,8 @@ namespace GranaFacil.Data.Dtos.Reserva
 {
     public class CreateReservaDto
     {
+        public int? MetaId { get; set; }   // opcional
+
         [Required(ErrorMessage = "Nome da reserva é obrigatório.")]
         public string Nome { get; set; } = null!;
 
