@@ -141,18 +141,18 @@ Cliente → Controller → Service → Repository → Banco de Dados
 A organização do projeto segue a seguinte estrutura:
 
 
-Models/
-Enums/
+- Models/
+- Enums/
 
-Controllers/
-Services/
-Repositories/
+- Controllers/
+- Services/
+- Repositories/
 
-DTOs/
-Profile/
+- DTOs/
+- Profile/
 
-Data/
-Migrations/
+- Data/
+- Migrations/
 
 
 Essa organização facilita a manutenção e compreensão da estrutura da aplicação.
