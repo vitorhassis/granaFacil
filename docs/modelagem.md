@@ -49,15 +49,8 @@ Os relacionamentos entre as entidades do sistema são definidos da seguinte form
 
 A estrutura do domínio foi projetada para permitir uma organização clara das informações financeiras do usuário.
 
-Cada tipo de registro possui um propósito específico dentro do sistema:
+Cada tipo de registro possui um propósito específico dentro do sistema,
 
-| Entidade |                 Função                      |
-| Usuario  | Representa o usuário do sistema             |
-| Conta    | Representa contas a pagar do usuário        |
-| Entrada  | Representa valores recebidos                |
-| Gasto    | Representa saídas financeiras               |
-| Meta     | Representa objetivo financeiro              |
-| Reserva  | Representa valores separados para objetivos |
 
 ---
 
@@ -70,7 +63,6 @@ Cada entidade do sistema corresponde a uma tabela no banco de dados, contendo se
 
 Os relacionamentos entre as tabelas são implementados utilizando **chaves estrangeiras (Foreign Keys)** para garantir integridade referencial.
 
-![Modelagem do banco](docs/diagrama-banco.png)
 
 ---
 
