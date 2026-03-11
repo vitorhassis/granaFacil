@@ -48,6 +48,7 @@ O backend foi estruturado seguindo **arquitetura em camadas**, separando respons
 - 📂 DTOs → Objetos de entrada e saída
 - 📂 Models → Entidades do domínio
 - 📂 Data → Contexto do banco e configurações
+- 📂  Docs → Documentação do projeto
 
 
 Essa estrutura mantém a aplicação organizada e próxima de padrões utilizados em projetos profissionais.
@@ -69,10 +70,10 @@ Nessa pasta estão documentados:
 - 📄 Regras de negócio
 - 📄 Escopo da solução
 - 📄 Modelagem do sistema
-- 📄 Diagramas (classes e banco de dados)
 - 📄 Estrutura da arquitetura
 - 📄 Descrição das entidades
 - 📄 Organização da API
+- 📄 Banco de dados
 
 Essa documentação descreve a **estrutura completa do projeto**, incluindo decisões de arquitetura e modelagem do domínio.
 
