@@ -86,6 +86,7 @@ Atualiza o registro de meta do usuário.
 
 DELETE /metas/{id}
 Remove o registro de meta do usuário.
+
 ---
 
 ## Reservas
