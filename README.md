@@ -1,74 +1,106 @@
 <h2 align="center">💰 GranaFácil | Sistema de Gestão Financeira com .NET 💰</h2>
 
-## 📌 Sobre o projeto
+---
 
-- O GranaFácil é uma aplicação web full stack desenvolvida com foco em organização financeira mensal por usuário, aplicando arquitetura em camadas e boas práticas no desenvolvimento de APIs REST com ASP.NET Core.
-- O sistema transforma a lógica de planilhas financeiras em um backend estruturado, com regras de negócio bem definidas, separação de responsabilidades e persistência em banco relacional.
-- O objetivo principal do projeto é demonstrar domínio em:
+## 📌 Sobre o Projeto
+
+O **GranaFácil** é uma aplicação web full stack voltada para **gestão financeira pessoal**, desenvolvida com foco em boas práticas de arquitetura e desenvolvimento de APIs REST utilizando **ASP.NET Core**.
+
+O projeto transforma a lógica comum de controle financeiro em planilhas em um **backend estruturado**, com separação clara de responsabilidades, persistência em banco relacional e aplicação de padrões utilizados em sistemas reais.
+
+O objetivo do projeto é demonstrar conhecimento prático em:
+
 - Arquitetura em camadas
-- Padrão Repository
-- Service Layer
+- Organização de projetos backend
+- Desenvolvimento de APIs REST
+- Modelagem de domínio
+- Persistência de dados com ORM
+
+---
+
+## 🚀 Tecnologias Utilizadas
+
+### Backend
+
+- C#
+- ASP.NET Core
 - Entity Framework Core
-- Organização de código voltada para aplicações reais
+- MySQL
+
+### Arquitetura e Padrões
+
+- DTOs (Data Transfer Objects)
+- Injeção de Dependência (Dependency Injection)
+- Service Layer
+- Repository Pattern
+- API REST
 
 ---
 
-## 🚀 Tecnologias utilizadas
+## 🏗️ Arquitetura do Sistema
 
-- ✅ C#
-- ✅ ASP.NET Core
-- ✅ Entity Framework Core
-- ✅ MySQL
-- ✅ DTOs (Data Transfer Objects)
-- ✅ Injeção de Dependência (DI)
-- ✅ Padrão Repository
-- ✅ API REST
+O backend foi estruturado seguindo **arquitetura em camadas**, separando responsabilidades e facilitando manutenção e evolução do sistema.
 
----
 
-## 🏗️ Arquitetura
-O projeto segue uma estrutura organizada em camadas:
-
-- 📂 Models → Entidades do domínio
-- 📂 DTOs → Objetos de entrada e saída de dados
-- 📂 Services → Regras de negócio
-- 📂 Repositories → Acesso a dados
 - 📂 Controllers → Endpoints da API
+- 📂 Services → Regras de negócio
+- 📂 Repositories → Acesso ao banco de dados
+- 📂 DTOs → Objetos de entrada e saída
+- 📂 Models → Entidades do domínio
+- 📂 Data → Contexto do banco e configurações
 
-🔹 Separação de responsabilidades
-- ✔️ Service → Contém regras de negócio e validações
-- ✔️ Repository → Responsável apenas pelo acesso ao banco
-- ✔️ Controllers → Mantidos enxutos
-- ✔️ DTOs → Isolam o domínio da camada externa
 
----
-
-## 📊 Funcionalidades Implementadas
-
-- ✔️ Cadastro de contas
-- ✔️ Validações de vencimento e valores
-- ✔️ Organização por usuário
-- ✔️ Filtro por mês e ano
-- ✔️ Atualização de dados
-- ✔️ Exclusão de registros
-- ✔️ Marcação de conta como paga
-
-## 🔐 Regras de Negócio
-
-- Validação de datas de vencimento
-- Validação de valores positivos
-- Controle de pagamento (impede pagar duas vezes)
-- Isolamento de dados por usuário
-- Organização financeira mensal
+Essa estrutura mantém a aplicação organizada e próxima de padrões utilizados em projetos profissionais.
 
 ---
 
-## 📈 Próximas Etapas
+## 📚 Documentação do Projeto
 
-- Implementação de autenticação com JWT
-- Proteção de rotas
-- Expansão para demais entidades (Entradas, Metas, Reservas)
-- Integração com frontend (Vue + Tailwind)
+Toda a **documentação detalhada do sistema** está disponível na pasta:
+
+
+/docs
+
+
+Nessa pasta estão documentados:
+
+- 📄 Visão do projeto
+- 📄 Requisitos do sistema
+- 📄 Regras de negócio
+- 📄 Escopo da solução
+- 📄 Modelagem do sistema
+- 📄 Diagramas (classes e banco de dados)
+- 📄 Estrutura da arquitetura
+- 📄 Descrição das entidades
+- 📄 Organização da API
+
+Essa documentação descreve a **estrutura completa do projeto**, incluindo decisões de arquitetura e modelagem do domínio.
+
+---
+
+## 📈 Próximas Etapas do Projeto
+
+O projeto continuará evoluindo com as seguintes melhorias:
+
+- Implementação de autenticação com **JWT**
+- Sistema de **autorização e proteção de rotas**
+- Expansão das entidades do domínio
+- Integração com **frontend (Vue + Tailwind)**
+- Implementação de **dashboard financeiro**
+- Geração de relatórios e análises financeiras
+
+---
+
+## 🎯 Objetivo do Projeto
+
+O **GranaFácil** é um projeto desenvolvido com foco em **aprendizado e demonstração de arquitetura backend**, simulando a estrutura de um sistema real de gestão financeira.
+
+Ele serve como base para estudo de:
+
+- Arquitetura de software
+- APIs REST
+- Modelagem de domínio
+- Organização de projetos backend
 
 ---
 
